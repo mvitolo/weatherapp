@@ -10,12 +10,16 @@ Forecast _$ForecastFromJson(Map<String, dynamic> json) {
   return Forecast(
     json['dt'] as int,
     json['dt_txt'] as String,
+    (json['weather'] as List<dynamic>)
+        .map((e) => Weather.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
 Map<String, dynamic> _$ForecastToJson(Forecast instance) => <String, dynamic>{
       'dt': instance.dt,
       'dt_txt': instance.dt_txt,
+      'weather': instance.weather,
     };
 
 Weather _$WeatherFromJson(Map<String, dynamic> json) {

@@ -5,8 +5,9 @@ part 'forecast.g.dart';
 class Forecast {
   final int dt;
   final String dt_txt;
+  final List<Weather> weather;
 
-  Forecast(this.dt, this.dt_txt);
+  Forecast(this.dt, this.dt_txt, this.weather);
 
   factory Forecast.fromJson(Map<String, dynamic> json) =>
       _$ForecastFromJson(json);
