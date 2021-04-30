@@ -16,7 +16,25 @@ class Api {
     if (response.statusCode == 200) {
       var body = json.decode(response.body) as Map<String, dynamic>;
       var list = body["list"] as List;
-      return list.map((i) => Forecast.fromJson(i)).toList();
+      return list.map((i) => Forecast.fromJson(i)).toList().fold([],
+          (previousValue, element) {
+        List<Forecast> l = (previousValue as List<Forecast>);
+
+        if (l.length == 0) {
+          l.add(element);
+          return l;
+        }
+        if (l.length == 5) {
+          return l;
+        }
+        DateTime previous =
+            DateTime.fromMillisecondsSinceEpoch(l.last.dt * 1000);
+        DateTime next = DateTime.fromMillisecondsSinceEpoch(element.dt * 1000);
+        if (previous.day != next.day) {
+          l.add(element);
+        }
+        return l;
+      });
     } else {
       throw Exception('Failed to load Forecast');
     }
