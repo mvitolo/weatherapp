@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:weatherapp/engine/api.dart';
 import 'package:weatherapp/model/forecast.dart';
