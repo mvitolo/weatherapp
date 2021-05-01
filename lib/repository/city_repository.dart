@@ -21,4 +21,9 @@ class CityRepository {
 
     yield* _controller.stream;
   }
+
+  void dispose() {
+    _controller.close();
+    searchController.close();
+  }
 }

@@ -24,36 +24,28 @@ class CityView extends StatelessWidget {
           ),
           (state is CityEmpty)
               ? Center(child: CircularProgressIndicator())
-              : view([(state as CityValue).city])
+              : view((state as CityValue).city, context)
         ],
       );
     });
   }
 
-  Widget view(List<City> cities) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: cities.length,
-      itemBuilder: (BuildContext context, int index) {
-        City c = cities[index];
+  Widget view(City city, BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(city.name),
+        onTap: () {
+          BlocProvider.of<CityBloc>(context).choosenCity.add(city.name);
+          BlocProvider.of<CityBloc>(context).add(CityLoading());
 
-        return Card(
-          child: ListTile(
-            title: Text(c.name),
-            onTap: () {
-              BlocProvider.of<CityBloc>(context).choosenCity.add(c.name);
-              BlocProvider.of<CityBloc>(context).add(CityLoading());
+          BlocProvider.of<CityBloc>(context)
+              .repository
+              .searchController
+              .add("");
 
-              BlocProvider.of<CityBloc>(context)
-                  .repository
-                  .searchController
-                  .add("");
-
-              Navigator.pop(context);
-            },
-          ),
-        );
-      },
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 }

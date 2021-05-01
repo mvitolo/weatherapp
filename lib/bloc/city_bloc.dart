@@ -28,4 +28,11 @@ class CityBloc extends Bloc<CityEvent, CityState> {
         break;
     }
   }
+
+  @override
+  Future<void> close() {
+    subscription.cancel();
+    repository.dispose();
+    return super.close();
+  }
 }
