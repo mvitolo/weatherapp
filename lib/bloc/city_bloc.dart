@@ -9,8 +9,9 @@ import 'package:weatherapp/repository/city_repository.dart';
 class CityBloc extends Bloc<CityEvent, CityState> {
   CityRepository repository = CityRepository();
   late StreamSubscription<List<City>> subscription;
+  StreamController<String> choosenCity;
 
-  CityBloc() : super(CityEmpty()) {
+  CityBloc(this.choosenCity) : super(CityEmpty()) {
     subscription = repository.forecast.listen((value) {
       add(CityChanged(value));
     });

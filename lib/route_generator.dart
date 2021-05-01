@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherapp/bloc/city_bloc.dart';
+import 'package:weatherapp/repository/bloc_repository.dart';
 import 'package:weatherapp/view/city_page.dart';
 import 'package:weatherapp/view/home_page.dart';
 
@@ -13,12 +14,13 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (context) => MultiBlocProvider(providers: [
                   BlocProvider<ForecastBloc>(
-                      create: (context) => ForecastBloc()),
+                      create: (context) => BlocRepository().forecast),
                 ], child: HomePage()));
       case CityPage.route:
         return MaterialPageRoute(
             builder: (context) => MultiBlocProvider(providers: [
-                  BlocProvider<CityBloc>(create: (context) => CityBloc()),
+                  BlocProvider<CityBloc>(
+                      create: (context) => BlocRepository().city!),
                 ], child: CityPage()));
 
       default:

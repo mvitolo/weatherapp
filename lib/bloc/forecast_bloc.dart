@@ -12,6 +12,7 @@ class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
   late StreamSubscription<Forecast> subscription;
 
   ForecastBloc() : super(ForecastEmpty()) {
+    repository = ForecastRepository();
     subscription = repository.forecast.listen((value) {
       add(ForecastChanged(value));
     });
