@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:weatherapp/model/city.dart';
 import 'dart:convert';
 
 import 'package:weatherapp/model/forecast.dart';
@@ -37,6 +38,22 @@ class Api {
       });
     } else {
       throw Exception('Failed to load Forecast');
+    }
+  }
+
+  Future<List<City>> city(String value) async {
+    final response = await client.get(Uri.parse(
+        "http://api.openweathermap.org/geo/1.0/direct?q=" +
+            value +
+            "&limit=1&appid=" +
+            openweathermapApiKey));
+
+    if (response.statusCode == 200) {
+      return (json.decode(response.body) as List)
+          .map((i) => City.fromJson(i))
+          .toList();
+    } else {
+      throw Exception('Failed to load Friends');
     }
   }
 }

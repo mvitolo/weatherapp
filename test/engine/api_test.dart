@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:weatherapp/engine/api.dart';
+import 'package:weatherapp/model/city.dart';
 import 'package:weatherapp/model/forecast.dart';
 import 'package:http/testing.dart';
 
@@ -9,8 +10,8 @@ import 'package:http/testing.dart';
 // class MockClient extends Mock implements http.Client {}
 
 main() {
-  group('fetch Friends', () {
-    test('returns a list of 1 Friends', () async {
+  group('fetch Forecast', () {
+    test('returns a list of Forecast', () async {
       final api = Api();
 
       final fjson = '''{
@@ -226,7 +227,39 @@ main() {
 
       List<Forecast> list = await api.forecasts();
 
-      expect(list.length, 5);
+      expect(list.length, 1);
+    });
+  });
+
+  group('fetch City', () {
+    test('returns a list of Cities', () async {
+      final api = Api();
+
+      final fjson = '''[
+    {
+        "name": "Sanremo",
+        "local_names": {
+            "ascii": "Sanremo",
+            "feature_name": "Sanremo",
+            "it": "Comune di Sanremo"
+        },
+        "lat": 43.8182,
+        "lon": 7.7612,
+        "country": "IT"
+    }
+]''';
+
+      final client = MockClient((request) async {
+        return Response(fjson, 200,
+            headers: {'content-type': 'application/json'});
+      });
+
+      api.client = client;
+
+      List<City> list = await api.city("Sanremo");
+
+      expect(list.length, 1);
+      expect(list.first.name, "Sanremo");
     });
   });
 }
