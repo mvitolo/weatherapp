@@ -2,28 +2,24 @@ import 'package:equatable/equatable.dart';
 import 'package:weatherapp/model/forecast.dart';
 
 abstract class ForecastEvent extends Equatable {
-  const ForecastEvent(this.forecast);
-
-  final List<Forecast> forecast;
+  const ForecastEvent();
 
   @override
   List<Object> get props => [];
 }
 
 class ForecastChanged extends ForecastEvent {
-  const ForecastChanged(this.forecast) : super(forecast);
+  const ForecastChanged(this.forecast) : super();
 
-  final List<Forecast> forecast;
+  final Forecast forecast;
 
   @override
   List<Object> get props => [forecast];
 }
 
 class ForecastLoading extends ForecastEvent {
-  ForecastLoading() : super([]);
-
-  final List<Forecast> forecast = [];
+  ForecastLoading() : super();
 
   @override
-  List<Object> get props => [forecast];
+  List<Object> get props => [];
 }

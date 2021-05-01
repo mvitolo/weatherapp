@@ -9,9 +9,10 @@ import 'forecast_state.dart';
 
 class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
   ForecastRepository repository = ForecastRepository();
-  late StreamSubscription<List<Forecast>> subscription;
+  late StreamSubscription<Forecast> subscription;
 
   ForecastBloc() : super(ForecastEmpty()) {
+    repository = ForecastRepository();
     subscription = repository.forecast.listen((value) {
       add(ForecastChanged(value));
     });
@@ -21,8 +22,11 @@ class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
   Stream<ForecastState> mapEventToState(ForecastEvent event) async* {
     switch (event.runtimeType) {
       case ForecastChanged:
-        yield ForecastState(event.forecast);
+        var e = event as ForecastChanged;
+        yield ForecastValue(e.forecast);
         break;
+      default:
+        yield ForecastEmpty();
     }
   }
 

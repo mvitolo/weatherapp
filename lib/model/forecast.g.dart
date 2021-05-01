@@ -8,6 +8,20 @@ part of 'forecast.dart';
 
 Forecast _$ForecastFromJson(Map<String, dynamic> json) {
   return Forecast(
+    (json['list'] as List<dynamic>)
+        .map((e) => WForecast.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    City.fromJson(json['city'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$ForecastToJson(Forecast instance) => <String, dynamic>{
+      'list': instance.list,
+      'city': instance.city,
+    };
+
+WForecast _$WForecastFromJson(Map<String, dynamic> json) {
+  return WForecast(
     json['dt'] as int,
     json['dt_txt'] as String,
     (json['weather'] as List<dynamic>)
@@ -16,7 +30,7 @@ Forecast _$ForecastFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ForecastToJson(Forecast instance) => <String, dynamic>{
+Map<String, dynamic> _$WForecastToJson(WForecast instance) => <String, dynamic>{
       'dt': instance.dt,
       'dt_txt': instance.dt_txt,
       'weather': instance.weather,
