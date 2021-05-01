@@ -4,13 +4,19 @@ import 'package:weatherapp/engine/api.dart';
 import 'package:weatherapp/model/forecast.dart';
 
 class ForecastRepository {
-  final _controller = StreamController<List<Forecast>>();
+  final _controller = StreamController<Forecast>();
+  final cityController = StreamController<String>();
+
   var api = Api();
 
-  ForecastRepository();
+  ForecastRepository() {
+    cityController.add("London");
+  }
 
-  Stream<List<Forecast>> get forecast async* {
-    api.forecasts().then((value) => _controller.add(value));
+  Stream<Forecast> get forecast async* {
+    cityController.stream.listen((event) {
+      api.forecasts(event).then((value) => _controller.add(value));
+    });
 
     yield* _controller.stream;
   }
