@@ -22,9 +22,20 @@ class HomePage extends StatelessWidget {
         title: new Text("Forecast"),
       ),
       body: SafeArea(
-        child: BlocProvider(
-            create: (_) => BlocProvider.of<ForecastBloc>(context),
-            child: ForecastView()),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text("London"),
+              ),
+              BlocProvider(
+                  create: (_) => BlocProvider.of<ForecastBloc>(context),
+                  child: ForecastView()),
+            ],
+          ),
+        ),
       ),
     );
   }
