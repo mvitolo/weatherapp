@@ -20,7 +20,8 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (context) => MultiBlocProvider(providers: [
                   BlocProvider<CityBloc>(
-                      create: (context) => BlocRepository().city!),
+                      create: (context) => CityBloc(
+                          BlocRepository().forecast.repository.cityController)),
                 ], child: CityPage()));
 
       default:

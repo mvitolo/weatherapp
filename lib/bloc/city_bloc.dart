@@ -8,11 +8,11 @@ import 'package:weatherapp/repository/city_repository.dart';
 
 class CityBloc extends Bloc<CityEvent, CityState> {
   CityRepository repository = CityRepository();
-  late StreamSubscription<List<City>> subscription;
+  late StreamSubscription<City> subscription;
   StreamController<String> choosenCity;
 
   CityBloc(this.choosenCity) : super(CityEmpty()) {
-    subscription = repository.forecast.listen((value) {
+    subscription = repository.cities.listen((value) {
       add(CityChanged(value));
     });
   }
@@ -21,15 +21,11 @@ class CityBloc extends Bloc<CityEvent, CityState> {
   Stream<CityState> mapEventToState(CityEvent event) async* {
     switch (event.runtimeType) {
       case CityChanged:
-        yield CityState(event.cities);
+        yield CityValue((event as CityChanged).city);
+        break;
+      default:
+        yield CityEmpty();
         break;
     }
-  }
-
-  @override
-  Future<void> close() {
-    subscription.cancel();
-    repository.dispose();
-    return super.close();
   }
 }

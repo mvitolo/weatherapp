@@ -2,16 +2,23 @@ import 'package:equatable/equatable.dart';
 import 'package:weatherapp/model/city.dart';
 
 class CityState extends Equatable {
-  CityState(this.cities);
-
-  final List<City> cities;
+  CityState();
 
   @override
-  List<Object> get props => [cities];
+  List<Object> get props => [];
+}
+
+class CityValue extends CityState {
+  CityValue(this.city);
+
+  final City city;
+
+  @override
+  List<Object> get props => [city.hashCode];
 }
 
 class CityEmpty extends CityState {
-  CityEmpty() : super([]);
+  CityEmpty() : super();
 
   @override
   List<Object> get props => [];
