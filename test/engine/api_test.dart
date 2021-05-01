@@ -225,9 +225,9 @@ main() {
 
       api.client = client;
 
-      List<Forecast> list = await api.forecasts();
+      Forecast forecast = await api.forecasts("London");
 
-      expect(list.length, 1);
+      expect(forecast.list.length, 5);
     });
   });
 

@@ -1,18 +1,32 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:weatherapp/model/city.dart';
 part 'forecast.g.dart';
 
 @JsonSerializable()
 class Forecast {
-  final int dt;
-  final String dt_txt;
-  final List<Weather> weather;
+  final List<WForecast> list;
+  final City city;
 
-  Forecast(this.dt, this.dt_txt, this.weather);
+  Forecast(this.list, this.city);
 
   factory Forecast.fromJson(Map<String, dynamic> json) =>
       _$ForecastFromJson(json);
 
   Map<String, dynamic> toJson() => _$ForecastToJson(this);
+}
+
+@JsonSerializable()
+class WForecast {
+  final int dt;
+  final String dt_txt;
+  final List<Weather> weather;
+
+  WForecast(this.dt, this.dt_txt, this.weather);
+
+  factory WForecast.fromJson(Map<String, dynamic> json) =>
+      _$WForecastFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WForecastToJson(this);
 }
 
 @JsonSerializable()
